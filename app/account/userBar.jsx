@@ -12,17 +12,17 @@ class UserBar extends React.Component{
 	}
 
 	render() {
-        const isLoginUser = this.props.userInfo.userId;
+        const isLoginUser = this.props.userId;
         let link;
 
         if (isLoginUser) {
-            link = <a>{this.props.userInfo.username}<span> , </span><span onClick={this.props.logout.bind(this)}>Logout</span></a>;
+            link = <a className="navigation_user-bar_logout">{this.props.username}<span> , </span><span onClick={this.props.logout.bind(this)}>Logout</span></a>;
         } else {
-            link = <a onClick={this.props.login.bind(this, "asd", "xyz")}>Log in</a>;
+            link = <a className="navigation_user-bar_login" onClick={this.props.login.bind(this, "asd", "xyz")}>Log in</a>;
         }
 
 		return (
-			<div className="user-bar">
+			<div className="navigation_user-bar">
                 {link}
 			</div>
 			)
@@ -30,7 +30,7 @@ class UserBar extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-	return state;
+	return state.userInfo;
 }
 
 const mapDispatchToProps = (dispatch) => {

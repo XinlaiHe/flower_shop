@@ -28795,6 +28795,11 @@
 				return _react2.default.createElement(
 					"div",
 					{ className: "navigation" },
+					_react2.default.createElement(
+						"h1",
+						{ className: "navigation_header" },
+						"Flower Shop"
+					),
 					_react2.default.createElement(_userBar2.default, null)
 				);
 			}
@@ -28851,14 +28856,14 @@
 		_createClass(UserBar, [{
 			key: 'render',
 			value: function render() {
-				var isLoginUser = this.props.userInfo.userId;
+				var isLoginUser = this.props.userId;
 				var link = void 0;
 
 				if (isLoginUser) {
 					link = _react2.default.createElement(
 						'a',
-						null,
-						this.props.userInfo.username,
+						{ className: 'navigation_user-bar_logout' },
+						this.props.username,
 						_react2.default.createElement(
 							'span',
 							null,
@@ -28873,14 +28878,14 @@
 				} else {
 					link = _react2.default.createElement(
 						'a',
-						{ onClick: this.props.login.bind(this, "asd", "xyz") },
+						{ className: 'navigation_user-bar_login', onClick: this.props.login.bind(this, "asd", "xyz") },
 						'Log in'
 					);
 				}
 
 				return _react2.default.createElement(
 					'div',
-					{ className: 'user-bar' },
+					{ className: 'navigation_user-bar' },
 					link
 				);
 			}
@@ -28890,7 +28895,7 @@
 	}(_react2.default.Component);
 
 	var mapStateToProps = function mapStateToProps(state) {
-		return state;
+		return state.userInfo;
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -29009,7 +29014,7 @@
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0; }\n\n.footer {\n  position: fixed;\n  bottom: 0; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: darkseagreen; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 40px;\n  background-color: mintcream;\n  width: 100%;\n  left: 0; }\n", ""]);
 
 	// exports
 

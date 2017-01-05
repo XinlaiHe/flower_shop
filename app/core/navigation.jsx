@@ -12,6 +12,7 @@ class Navigation extends React.Component{
 	render() {
 		return (
 			<div className="navigation">
+				<h1 className="navigation_header">Flower Shop</h1>
                 <UserBar />
 			</div>
 			)
