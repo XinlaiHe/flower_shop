@@ -1,6 +1,8 @@
 "use strict";
 
 import React from 'react';
+import Navigation from "./navigation.jsx";
+import Footer from "./footer.jsx";
 
 class HomeComponent extends React.Component{
 
@@ -10,8 +12,9 @@ class HomeComponent extends React.Component{
 
 	render() {
 		return (
-			<div>
-                Hello World!
+			<div className="content">
+                <Navigation />
+                <Footer />
 			</div>
 			)
 	}
