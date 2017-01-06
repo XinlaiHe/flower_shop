@@ -1,8 +1,8 @@
 "use strict";
 
-import React from 'react';
-import Navigation from "./navigation.jsx";
-import Footer from "./footer.jsx";
+import React from "react";
+import Navigation from "../containers/navigation.jsx";
+import Footer from "../containers/footer.jsx";
 
 class HomeComponent extends React.Component{
 
