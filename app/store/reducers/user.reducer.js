@@ -14,9 +14,11 @@ export default function userReducer(state = initialState, action) {
     case actionTypes.userLogout:
       return Object.assign({}, state, initialState)
     case actionTypes.userTryToLogin:
-      return Object.assign({}, state, { userTryLogin: true, userTryRegiser: false  })
+      return Object.assign({}, state, { userTryLogin: true, userTryRegiser: false })
     case actionTypes.userTryToRegister:
-      return Object.assign({}, state, { userTryLogin: false, userTryRegiser: true  })
+      return Object.assign({}, state, { userTryLogin: false, userTryRegiser: true })
+    case actionTypes.cancel:
+      return Object.assign({}, state, { userTryLogin: false, userTryRegiser: false })
     default:
       return state
   }

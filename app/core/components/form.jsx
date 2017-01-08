@@ -3,6 +3,7 @@
 import React from "react";
 import _ from "lodash";
 import InputField from "./inputField.jsx";
+import Control from "./control.jsx";
 
 class Form extends React.Component{
 
@@ -11,15 +12,20 @@ class Form extends React.Component{
 	}
 
 	render() {
-        console.log(this.props)
         const className = "form " + this.props.formType;
-        const inputGroup = _.map(this.props.formFields, (item) => <InputField name= {item}/>);
+        const inputGroup = _.map(this.props.formFields, (item) => <InputField key={item} name={item}/>);
+        const controls = _.map(this.props.controls, (item) => <Control key={item} name={item} action={this.props[item]}/>);
 
 		return (
 			<div className={className}>
                 {inputGroup}
+                {controls}
 			</div>
 			)
+	}
+
+	getAction() {
+
 	}
 }
 

@@ -17,3 +17,7 @@ export function tryLogin() {
 export function tryResiter() {
     return { type: actionTypes.userTryToRegister };
 }
+
+export function cancel() {
+    return { type: actionTypes.cancel };
+}

@@ -1,0 +1,17 @@
+.modal {
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	animation: pop-out 1s ease-in forwards;
+	height: 100%;
+}
+
+@keyframes pop-out {
+	from {  
+    	background-color: white;
+  	}  
+  
+  	to {  
+    	background-color: #e4e4e4;
+  	} 
+}

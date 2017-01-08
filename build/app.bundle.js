@@ -70,7 +70,7 @@
 
 	var _homeComponent2 = _interopRequireDefault(_homeComponent);
 
-	var _core = __webpack_require__(283);
+	var _core = __webpack_require__(285);
 
 	var _core2 = _interopRequireDefault(_core);
 
@@ -735,17 +735,6 @@
 	  }
 	};
 
-	var fiveArgumentPooler = function (a1, a2, a3, a4, a5) {
-	  var Klass = this;
-	  if (Klass.instancePool.length) {
-	    var instance = Klass.instancePool.pop();
-	    Klass.call(instance, a1, a2, a3, a4, a5);
-	    return instance;
-	  } else {
-	    return new Klass(a1, a2, a3, a4, a5);
-	  }
-	};
-
 	var standardReleaser = function (instance) {
 	  var Klass = this;
 	  !(instance instanceof Klass) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Trying to release an instance into a pool of a different type.') : _prodInvariant('25') : void 0;
@@ -785,8 +774,7 @@
 	  oneArgumentPooler: oneArgumentPooler,
 	  twoArgumentPooler: twoArgumentPooler,
 	  threeArgumentPooler: threeArgumentPooler,
-	  fourArgumentPooler: fourArgumentPooler,
-	  fiveArgumentPooler: fiveArgumentPooler
+	  fourArgumentPooler: fourArgumentPooler
 	};
 
 	module.exports = PooledClass;
@@ -3126,7 +3114,14 @@
 	    // We warn in this case but don't throw. We expect the element creation to
 	    // succeed and there will likely be errors in render.
 	    if (!validType) {
-	      process.env.NODE_ENV !== 'production' ? warning(false, 'React.createElement: type should not be null, undefined, boolean, or ' + 'number. It should be a string (for DOM elements) or a ReactClass ' + '(for composite components).%s', getDeclarationErrorAddendum()) : void 0;
+	      if (typeof type !== 'function' && typeof type !== 'string') {
+	        var info = '';
+	        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+	          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+	        }
+	        info += getDeclarationErrorAddendum();
+	        process.env.NODE_ENV !== 'production' ? warning(false, 'React.createElement: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', type == null ? type : typeof type, info) : void 0;
+	      }
 	    }
 
 	    var element = ReactElement.createElement.apply(this, arguments);
@@ -4097,7 +4092,7 @@
 
 	'use strict';
 
-	module.exports = '15.4.1';
+	module.exports = '15.4.2';
 
 /***/ },
 /* 31 */
@@ -4296,6 +4291,13 @@
 	var internalInstanceKey = '__reactInternalInstance$' + Math.random().toString(36).slice(2);
 
 	/**
+	 * Check if a given node should be cached.
+	 */
+	function shouldPrecacheNode(node, nodeID) {
+	  return node.nodeType === 1 && node.getAttribute(ATTR_NAME) === String(nodeID) || node.nodeType === 8 && node.nodeValue === ' react-text: ' + nodeID + ' ' || node.nodeType === 8 && node.nodeValue === ' react-empty: ' + nodeID + ' ';
+	}
+
+	/**
 	 * Drill down (through composites and empty components) until we get a host or
 	 * host text component.
 	 *
@@ -4360,7 +4362,7 @@
 	    }
 	    // We assume the child nodes are in the same order as the child instances.
 	    for (; childNode !== null; childNode = childNode.nextSibling) {
-	      if (childNode.nodeType === 1 && childNode.getAttribute(ATTR_NAME) === String(childID) || childNode.nodeType === 8 && childNode.nodeValue === ' react-text: ' + childID + ' ' || childNode.nodeType === 8 && childNode.nodeValue === ' react-empty: ' + childID + ' ') {
+	      if (shouldPrecacheNode(childNode, childID)) {
 	        precacheNode(childInst, childNode);
 	        continue outer;
 	      }
@@ -6601,17 +6603,6 @@
 	  }
 	};
 
-	var fiveArgumentPooler = function (a1, a2, a3, a4, a5) {
-	  var Klass = this;
-	  if (Klass.instancePool.length) {
-	    var instance = Klass.instancePool.pop();
-	    Klass.call(instance, a1, a2, a3, a4, a5);
-	    return instance;
-	  } else {
-	    return new Klass(a1, a2, a3, a4, a5);
-	  }
-	};
-
 	var standardReleaser = function (instance) {
 	  var Klass = this;
 	  !(instance instanceof Klass) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Trying to release an instance into a pool of a different type.') : _prodInvariant('25') : void 0;
@@ -6651,8 +6642,7 @@
 	  oneArgumentPooler: oneArgumentPooler,
 	  twoArgumentPooler: twoArgumentPooler,
 	  threeArgumentPooler: threeArgumentPooler,
-	  fourArgumentPooler: fourArgumentPooler,
-	  fiveArgumentPooler: fiveArgumentPooler
+	  fourArgumentPooler: fourArgumentPooler
 	};
 
 	module.exports = PooledClass;
@@ -11470,12 +11460,18 @@
 	    } else {
 	      var contentToUse = CONTENT_TYPES[typeof props.children] ? props.children : null;
 	      var childrenToUse = contentToUse != null ? null : props.children;
+	      // TODO: Validate that text is allowed as a child of this node
 	      if (contentToUse != null) {
-	        // TODO: Validate that text is allowed as a child of this node
-	        if (process.env.NODE_ENV !== 'production') {
-	          setAndValidateContentChildDev.call(this, contentToUse);
+	        // Avoid setting textContent when the text is empty. In IE11 setting
+	        // textContent on a text area will cause the placeholder to not
+	        // show within the textarea until it has been focused and blurred again.
+	        // https://github.com/facebook/react/issues/6731#issuecomment-254874553
+	        if (contentToUse !== '') {
+	          if (process.env.NODE_ENV !== 'production') {
+	            setAndValidateContentChildDev.call(this, contentToUse);
+	          }
+	          DOMLazyTree.queueText(lazyTree, contentToUse);
 	        }
-	        DOMLazyTree.queueText(lazyTree, contentToUse);
 	      } else if (childrenToUse != null) {
 	        var mountImages = this.mountChildren(childrenToUse, transaction, context);
 	        for (var i = 0; i < mountImages.length; i++) {
@@ -13395,7 +13391,17 @@
 	      }
 	    } else {
 	      if (props.value == null && props.defaultValue != null) {
-	        node.defaultValue = '' + props.defaultValue;
+	        // In Chrome, assigning defaultValue to certain input types triggers input validation.
+	        // For number inputs, the display value loses trailing decimal points. For email inputs,
+	        // Chrome raises "The specified value <x> is not a valid email address".
+	        //
+	        // Here we check to see if the defaultValue has actually changed, avoiding these problems
+	        // when the user is inputting text
+	        //
+	        // https://github.com/facebook/react/issues/7253
+	        if (node.defaultValue !== '' + props.defaultValue) {
+	          node.defaultValue = '' + props.defaultValue;
+	        }
 	      }
 	      if (props.checked == null && props.defaultChecked != null) {
 	        node.defaultChecked = !!props.defaultChecked;
@@ -14142,9 +14148,15 @@
 	    // This is in postMount because we need access to the DOM node, which is not
 	    // available until after the component has mounted.
 	    var node = ReactDOMComponentTree.getNodeFromInstance(inst);
+	    var textContent = node.textContent;
 
-	    // Warning: node.value may be the empty string at this point (IE11) if placeholder is set.
-	    node.value = node.textContent; // Detach value from defaultValue
+	    // Only set node.value if textContent is equal to the expected
+	    // initial value. In IE10/IE11 there is a bug where the placeholder attribute
+	    // will populate textContent as well.
+	    // https://developer.microsoft.com/microsoft-edge/platform/issues/101525/
+	    if (textContent === inst._wrapperState.initialValue) {
+	      node.value = textContent;
+	    }
 	  }
 	};
 
@@ -14946,7 +14958,17 @@
 	    instance = ReactEmptyComponent.create(instantiateReactComponent);
 	  } else if (typeof node === 'object') {
 	    var element = node;
-	    !(element && (typeof element.type === 'function' || typeof element.type === 'string')) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s', element.type == null ? element.type : typeof element.type, getDeclarationErrorAddendum(element._owner)) : _prodInvariant('130', element.type == null ? element.type : typeof element.type, getDeclarationErrorAddendum(element._owner)) : void 0;
+	    var type = element.type;
+	    if (typeof type !== 'function' && typeof type !== 'string') {
+	      var info = '';
+	      if (process.env.NODE_ENV !== 'production') {
+	        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+	          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+	        }
+	      }
+	      info += getDeclarationErrorAddendum(element._owner);
+	       true ? process.env.NODE_ENV !== 'production' ? invariant(false, 'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s', type == null ? type : typeof type, info) : _prodInvariant('130', type == null ? type : typeof type, info) : void 0;
+	    }
 
 	    // Special case string values
 	    if (typeof element.type === 'string') {
@@ -15236,7 +15258,7 @@
 	      // Since plain JS classes are defined without any special initialization
 	      // logic, we can not catch common errors early. Therefore, we have to
 	      // catch them here, at initialization time, instead.
-	      process.env.NODE_ENV !== 'production' ? warning(!inst.getInitialState || inst.getInitialState.isReactClassApproved, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component') : void 0;
+	      process.env.NODE_ENV !== 'production' ? warning(!inst.getInitialState || inst.getInitialState.isReactClassApproved || inst.state, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component') : void 0;
 	      process.env.NODE_ENV !== 'production' ? warning(!inst.getDefaultProps || inst.getDefaultProps.isReactClassApproved, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a static property to define defaultProps instead.', this.getName() || 'a component') : void 0;
 	      process.env.NODE_ENV !== 'production' ? warning(!inst.propTypes, 'propTypes was defined as an instance property on %s. Use a static ' + 'property to define propTypes instead.', this.getName() || 'a component') : void 0;
 	      process.env.NODE_ENV !== 'production' ? warning(!inst.contextTypes, 'contextTypes was defined as an instance property on %s. Use a ' + 'static property to define contextTypes instead.', this.getName() || 'a component') : void 0;
@@ -16240,14 +16262,11 @@
 
 	'use strict';
 
-	var _prodInvariant = __webpack_require__(35),
-	    _assign = __webpack_require__(4);
+	var _prodInvariant = __webpack_require__(35);
 
 	var invariant = __webpack_require__(8);
 
 	var genericComponentClass = null;
-	// This registry keeps track of wrapper classes around host tags.
-	var tagToComponentClass = {};
 	var textComponentClass = null;
 
 	var ReactHostComponentInjection = {
@@ -16260,11 +16279,6 @@
 	  // rendered as props.
 	  injectTextComponentClass: function (componentClass) {
 	    textComponentClass = componentClass;
-	  },
-	  // This accepts a keyed object with classes as values. Each key represents a
-	  // tag. That particular tag will use this class instead of the generic one.
-	  injectComponentClasses: function (componentClasses) {
-	    _assign(tagToComponentClass, componentClasses);
 	  }
 	};
 
@@ -21119,7 +21133,7 @@
 
 	'use strict';
 
-	module.exports = '15.4.1';
+	module.exports = '15.4.2';
 
 /***/ },
 /* 172 */
@@ -27551,6 +27565,8 @@
 	      return Object.assign({}, state, { userTryLogin: true, userTryRegiser: false });
 	    case _actionTypes2.default.userTryToRegister:
 	      return Object.assign({}, state, { userTryLogin: false, userTryRegiser: true });
+	    case _actionTypes2.default.cancel:
+	      return Object.assign({}, state, { userTryLogin: false, userTryRegiser: false });
 	    default:
 	      return state;
 	  }
@@ -27569,7 +27585,8 @@
 	    userLogin: "USER_LOGIN",
 	    userLogout: "USER_LOGOUT",
 	    userTryToLogin: "USER_TRY_LOGIN",
-	    userTryToRegister: "USER_TRY_REGISTER"
+	    userTryToRegister: "USER_TRY_REGISTER",
+	    cancel: "CANCEL"
 	};
 
 	exports.default = actionTypes;
@@ -28720,7 +28737,7 @@
 
 	var _navigation2 = _interopRequireDefault(_navigation);
 
-	var _footer = __webpack_require__(282);
+	var _footer = __webpack_require__(284);
 
 	var _footer2 = _interopRequireDefault(_footer);
 
@@ -28782,11 +28799,15 @@
 
 	var _form2 = _interopRequireDefault(_form);
 
+	var _modal = __webpack_require__(282);
+
+	var _modal2 = _interopRequireDefault(_modal);
+
 	var _redux = __webpack_require__(234);
 
 	var _reactRedux = __webpack_require__(259);
 
-	var _user = __webpack_require__(281);
+	var _user = __webpack_require__(283);
 
 	var userActions = _interopRequireWildcard(_user);
 
@@ -28812,8 +28833,13 @@
 		_createClass(Navigation, [{
 			key: "render",
 			value: function render() {
-				var _this2 = this;
+				var content = void 0;
 
+				if (this.props.userTryLogin) {
+					content = _react2.default.createElement(_form2.default, { formType: "login-form", formFields: ["username", "password"], controls: ["Login", "Cancel"], Login: this.props.login, Cancel: this.props.cancel });
+				} else if (this.props.userTryRegiser) {
+					content = _react2.default.createElement(_form2.default, { formType: "register-form", formFields: ["username", "password", "password-retype"], controls: ["Register", "Cancel"], Register: this.props.register, Cancel: this.props.cancel });
+				}
 				return _react2.default.createElement(
 					"div",
 					{ className: "navigation" },
@@ -28824,13 +28850,8 @@
 					),
 					_react2.default.createElement(_userBar2.default, this.props),
 					function () {
-						if (_this2.props.userTryLogin) {
-							return _react2.default.createElement(_form2.default, { formType: "login-form", formFields: ["username", "password"] });
-						}
-					}(),
-					function () {
-						if (_this2.props.userTryRegiser) {
-							return _react2.default.createElement(_form2.default, { formType: "register-form", formFields: ["username", "password", "password-retype"] });
+						if (content) {
+							return _react2.default.createElement(_modal2.default, { content: content });
 						}
 					}()
 				);
@@ -28949,6 +28970,10 @@
 
 	var _inputField2 = _interopRequireDefault(_inputField);
 
+	var _control = __webpack_require__(281);
+
+	var _control2 = _interopRequireDefault(_control);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28969,18 +28994,26 @@
 		_createClass(Form, [{
 			key: "render",
 			value: function render() {
-				console.log(this.props);
+				var _this2 = this;
+
 				var className = "form " + this.props.formType;
 				var inputGroup = _lodash2.default.map(this.props.formFields, function (item) {
-					return _react2.default.createElement(_inputField2.default, { name: item });
+					return _react2.default.createElement(_inputField2.default, { key: item, name: item });
+				});
+				var controls = _lodash2.default.map(this.props.controls, function (item) {
+					return _react2.default.createElement(_control2.default, { key: item, name: item, action: _this2.props[item] });
 				});
 
 				return _react2.default.createElement(
 					"div",
 					{ className: className },
-					inputGroup
+					inputGroup,
+					controls
 				);
 			}
+		}, {
+			key: "getAction",
+			value: function getAction() {}
 		}]);
 
 		return Form;
@@ -46117,13 +46150,13 @@
 			value: function render() {
 				return _react2.default.createElement(
 					"div",
-					{ className: "form input-field" },
+					{ className: "form_input-field" },
 					_react2.default.createElement(
 						"label",
-						{ className: "form input-field_label" },
+						{ className: "form_input-field_label" },
 						this.props.name
 					),
-					_react2.default.createElement("input", { className: "form input-field_text" })
+					_react2.default.createElement("input", { className: "form_input-field_text" })
 				);
 			}
 		}]);
@@ -46140,12 +46173,118 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Control = function (_React$Component) {
+		_inherits(Control, _React$Component);
+
+		function Control(props) {
+			_classCallCheck(this, Control);
+
+			return _possibleConstructorReturn(this, (Control.__proto__ || Object.getPrototypeOf(Control)).call(this, props));
+		}
+
+		_createClass(Control, [{
+			key: "render",
+			value: function render() {
+				var name = "form_control " + this.props.name;
+
+				return _react2.default.createElement(
+					"div",
+					{ className: "form_control" },
+					_react2.default.createElement(
+						"button",
+						{ className: name, onClick: this.props.action.bind(this) },
+						this.props.name
+					)
+				);
+			}
+		}]);
+
+		return Control;
+	}(_react2.default.Component);
+
+	exports.default = Control;
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Modal = function (_React$Component) {
+		_inherits(Modal, _React$Component);
+
+		function Modal(props) {
+			_classCallCheck(this, Modal);
+
+			return _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
+		}
+
+		_createClass(Modal, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ className: "modal" },
+					this.props.content
+				);
+			}
+		}]);
+
+		return Modal;
+	}(_react2.default.Component);
+
+	exports.default = Modal;
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 	exports.login = login;
 	exports.logout = logout;
 	exports.tryLogin = tryLogin;
 	exports.tryResiter = tryResiter;
+	exports.cancel = cancel;
 
 	var _actionTypes = __webpack_require__(258);
 
@@ -46169,8 +46308,12 @@
 	    return { type: _actionTypes2.default.userTryToRegister };
 	}
 
+	function cancel() {
+	    return { type: _actionTypes2.default.cancel };
+	}
+
 /***/ },
-/* 282 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -46219,16 +46362,16 @@
 	exports.default = Footer;
 
 /***/ },
-/* 283 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(284);
+	var content = __webpack_require__(286);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(286)(content, {});
+	var update = __webpack_require__(288)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -46245,21 +46388,21 @@
 	}
 
 /***/ },
-/* 284 */
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(285)();
+	exports = module.exports = __webpack_require__(287)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: darkseagreen; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 40px;\n  background-color: mintcream;\n  width: 100%;\n  left: 0; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: darkseagreen; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 40px;\n  background-color: mintcream;\n  width: 100%;\n  left: 0; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  height: 100%; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #e4e4e4; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  height: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n  .form_input-field {\n    padding: 30px 0; }\n    .form_input-field_label {\n      margin: 0 50px; }\n  .form_control {\n    display: inline-block;\n    width: 49%;\n    height: 40px;\n    border: 1px solid black; }\n    .form_control .Login,\n    .form_control .Register {\n      background-color: white;\n      color: black;\n      width: 100%; }\n    .form_control .Cancel {\n      background-color: black;\n      color: white;\n      width: 100%; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 285 */
+/* 287 */
 /***/ function(module, exports) {
 
 	/*
@@ -46315,7 +46458,7 @@
 
 
 /***/ },
-/* 286 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

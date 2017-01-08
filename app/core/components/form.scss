@@ -1,0 +1,36 @@
+.form {
+	margin: 0 auto;
+    width: 360px;
+    height: 360px;
+    background-color: white;
+    border-radius: 8px;
+    margin-top: 100px;
+
+    &_input-field {
+    	padding: 30px 0;
+
+    	&_label {
+    		margin: 0 50px;
+    	}
+    }
+
+    &_control {
+    	display:inline-block;
+    	width: 49%;
+    	height: 40px;
+    	border: 1px solid black;
+
+    	.Login,
+    	.Register {
+    		background-color: white;
+    		color: black;
+    		width: 100%;
+    	}
+
+    	.Cancel {
+			background-color: black;
+			color: white;
+			width: 100%;
+    	}
+    }
+}
