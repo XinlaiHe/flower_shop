@@ -9,11 +9,11 @@ class Control extends React.Component{
 	}
 
 	render() {
-		const name = "form_control " + this.props.name;
+		const name = "control " + this.props.text;
 
 		return (
-			<div className="form_control">
-                <button className={name} onClick={this.props.action.bind(this)}>{this.props.name}</button>       
+			<div className="control">
+                <button className={name} onClick={this.props.action.bind(this)}>{this.props.text}</button>       
 			</div>
 			)
 	}

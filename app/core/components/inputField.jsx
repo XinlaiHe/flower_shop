@@ -10,9 +10,9 @@ class InputField extends React.Component{
 
 	render() {
 		return (
-			<div className="form_input-field">
-                <label className="form_input-field_label">{this.props.name}</label>
-                <input className="form_input-field_text" />
+			<div className="input-field">
+                <label className="input-field_label">{this.props.name}</label>
+                <input className="input-field_text" required={this.props.required}/>
 			</div>
 			)
 	}

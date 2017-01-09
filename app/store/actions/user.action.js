@@ -2,12 +2,16 @@
 
 import actionTypes from "./actionTypes";
 
-export function login(userId, username) {
-    return { type: actionTypes.userLogin, userId: userId, username: username };
+export function login(username, password) {
+    return { type: actionTypes.userLogin, username: username, password: password };
 }
 
 export function logout() {
     return { type: actionTypes.userLogout };
+}
+
+export function register(username, password) {
+    return { type: actionTypes.userRegister, username: username, password: password };
 }
 
 export function tryLogin() {
