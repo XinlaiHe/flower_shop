@@ -11,7 +11,7 @@ class UserBar extends React.Component{
 	render() {
         let link;
 
-        if (this.props.userId && this.props.username) {
+        if (this.props.username) {
             link = <a className="navigation_user-bar_logout">{this.props.username}<span> , </span><span onClick={this.props.logout.bind(this)}>Logout</span></a>;
         } else {
             link = <a className="navigation_user-bar_login" onClick={this.props.tryLogin.bind(this)}>Log in</a>;

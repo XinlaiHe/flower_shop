@@ -12,7 +12,7 @@ class InputField extends React.Component{
 		return (
 			<div className="input-field">
                 <label className="input-field_label">{this.props.name}</label>
-                <input className="input-field_text" required={this.props.required}/>
+                <input id={this.props.name} className="input-field_text" required={this.props.required} onChange={this.onChange}/>
 			</div>
 			)
 	}
