@@ -39428,14 +39428,26 @@
 		_createClass(Link, [{
 			key: "render",
 			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ className: "link" },
-					_react2.default.createElement(
+				var content = void 0;
+
+				if (this.props.action) {
+					content = _react2.default.createElement(
 						"a",
 						{ onClick: this.props.action },
 						this.props.text
-					)
+					);
+				} else if (this.props.href) {
+					content = _react2.default.createElement(
+						"a",
+						{ href: this.props.link },
+						this.props.text
+					);
+				}
+
+				return _react2.default.createElement(
+					"div",
+					{ className: "link" },
+					content
 				);
 			}
 		}]);
@@ -39498,7 +39510,7 @@
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -39506,6 +39518,10 @@
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _link = __webpack_require__(282);
+
+	var _link2 = _interopRequireDefault(_link);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39516,26 +39532,50 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Footer = function (_React$Component) {
-		_inherits(Footer, _React$Component);
+	  _inherits(Footer, _React$Component);
 
-		function Footer(props) {
-			_classCallCheck(this, Footer);
+	  function Footer(props) {
+	    _classCallCheck(this, Footer);
 
-			return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this, props));
-		}
+	    return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).call(this, props));
+	  }
 
-		_createClass(Footer, [{
-			key: "render",
-			value: function render() {
-				return _react2.default.createElement(
-					"div",
-					{ className: "footer" },
-					"Footer"
-				);
-			}
-		}]);
+	  _createClass(Footer, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "footer" },
+	        _react2.default.createElement(
+	          "div",
+	          { className: "footer_link-group" },
+	          _react2.default.createElement(
+	            "span",
+	            { className: "footer_link-group_title" },
+	            "Hot Links"
+	          ),
+	          _react2.default.createElement(_link2.default, { href: "/spring", text: "Spring Express" }),
+	          _react2.default.createElement(_link2.default, { href: "/summer", text: "Summer Express" }),
+	          _react2.default.createElement(_link2.default, { href: "/autumn", text: "Autumn Express" }),
+	          _react2.default.createElement(_link2.default, { href: "/winter", text: "Winter Express" })
+	        ),
+	        _react2.default.createElement(
+	          "div",
+	          { className: "footer_link-group" },
+	          _react2.default.createElement(
+	            "span",
+	            { className: "footer_link-group_title" },
+	            "Customer Service"
+	          ),
+	          _react2.default.createElement(_link2.default, { href: "/spring", text: "Shipping & Return" }),
+	          _react2.default.createElement(_link2.default, { href: "/autumn", text: "Complaints" }),
+	          _react2.default.createElement(_link2.default, { href: "/winter", text: "Contact Us" })
+	        )
+	      );
+	    }
+	  }]);
 
-		return Footer;
+	  return Footer;
 	}(_react2.default.Component);
 
 	exports.default = Footer;
@@ -39575,7 +39615,7 @@
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: darkseagreen; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 40px;\n  background-color: mintcream;\n  width: 100%;\n  left: 0; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  height: 100%; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: #2196f3;\n  font-family: fantasy; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 120px;\n  background-color: #4caf50;\n  width: 100%;\n  left: 0;\n  font-family: fantasy; }\n  .footer_link-group {\n    display: inline-block;\n    width: 200px;\n    vertical-align: top; }\n    .footer_link-group_title {\n      margin: 0 auto;\n      width: 100%;\n      display: block;\n      text-align: center;\n      color: lavender; }\n    .footer_link-group .link {\n      padding: 2px 0;\n      font-size: 12px;\n      text-align: center; }\n      .footer_link-group .link a {\n        color: floralwhite; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  height: 100%;\n  margin-top: -6px; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n", ""]);
 
 	// exports
 
