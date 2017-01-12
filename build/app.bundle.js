@@ -39838,7 +39838,7 @@
 /* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__.p + "2cfe624417b69f1bf371e55191c0add7.gif";
+	module.exports = __webpack_require__.p + "8d7a0b59d31417d7e5a64c2cff5d0fef.svg";
 
 /***/ },
 /* 292 */
