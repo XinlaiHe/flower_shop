@@ -3,6 +3,7 @@
 import React from "react";
 import Navigation from "../containers/navigation.jsx";
 import Footer from "../containers/footer.jsx";
+import ProductList from "../../product/containers/productList.jsx";
 
 class HomeComponent extends React.Component{
 
@@ -14,6 +15,7 @@ class HomeComponent extends React.Component{
 		return (
 			<div className="content">
                 <Navigation />
+                <ProductList />
                 <Footer />
 			</div>
 			)

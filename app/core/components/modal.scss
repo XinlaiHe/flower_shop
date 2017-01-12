@@ -5,6 +5,15 @@
 	animation: pop-out 1s ease-in forwards;
 	height: 100%;
 	margin-top: -6px;
+	opacity: 0.5;
+
+	.loader {
+		background: url('../assets/ring-alt.gif');
+		width: 130px;
+		height: 130px;
+		margin-left: calc(50% - 65px);
+		margin-top: 300px;
+	}
 }
 
 @keyframes pop-out {

@@ -6,7 +6,8 @@ const actionTypes = {
     userRegister: "USER_REGISTER",
     userTryToLogin: "USER_TRY_LOGIN",
     userTryToRegister: "USER_TRY_REGISTER",
-    cancel: "CANCEL"
+    cancel: "CANCEL",
+    productsLoaded: "PRODUCTS_LOADED"
 };
 
 export default actionTypes;
