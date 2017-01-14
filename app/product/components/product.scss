@@ -3,6 +3,13 @@
 	height: 300px;
 	width: 200px;
 	text-align: center;
+	cursor: pointer;
+	border-radius: 6px;
+	transition: all 0.5s ease-in-out;
+
+	&:hover {
+		background-color: lightgrey;
+	}
 
 	&_name {
 		display: block;
