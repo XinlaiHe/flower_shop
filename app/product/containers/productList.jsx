@@ -2,6 +2,7 @@
 
 import React from "react";
 import Modal from "../../core/components/modal.jsx";
+import Product from "../components/product.jsx";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as productsActions from "../../store/actions/products.action";
@@ -14,13 +15,17 @@ class ProductList extends React.Component{
 	}
 
 	render() {
-		let loader = <div className="loader"></div>;
-
 		return (
 			<div className="product-list">
                 {(() => {
 					if (this.props.loading) {
+						const loader = <div className="loader"></div>;
+
 						return <Modal content={loader} />
+					} else {
+						const products = this.props.products.map((product) => <Product key={product.name} {...product} />);
+
+						return products;
 					}
 				})()}
 			</div>

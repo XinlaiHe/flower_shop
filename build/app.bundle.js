@@ -70,7 +70,7 @@
 
 	var _homeComponent2 = _interopRequireDefault(_homeComponent);
 
-	var _core = __webpack_require__(288);
+	var _core = __webpack_require__(289);
 
 	var _core2 = _interopRequireDefault(_core);
 
@@ -39635,6 +39635,8 @@
 		value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
@@ -39645,11 +39647,15 @@
 
 	var _modal2 = _interopRequireDefault(_modal);
 
+	var _product = __webpack_require__(287);
+
+	var _product2 = _interopRequireDefault(_product);
+
 	var _redux = __webpack_require__(234);
 
 	var _reactRedux = __webpack_require__(260);
 
-	var _products = __webpack_require__(287);
+	var _products = __webpack_require__(288);
 
 	var productsActions = _interopRequireWildcard(_products);
 
@@ -39680,14 +39686,20 @@
 			value: function render() {
 				var _this2 = this;
 
-				var loader = _react2.default.createElement("div", { className: "loader" });
-
 				return _react2.default.createElement(
 					"div",
 					{ className: "product-list" },
 					function () {
 						if (_this2.props.loading) {
+							var loader = _react2.default.createElement("div", { className: "loader" });
+
 							return _react2.default.createElement(_modal2.default, { content: loader });
+						} else {
+							var products = _this2.props.products.map(function (product) {
+								return _react2.default.createElement(_product2.default, _extends({ key: product.name }, product));
+							});
+
+							return products;
 						}
 					}()
 				);
@@ -39716,6 +39728,65 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Product = function (_React$Component) {
+		_inherits(Product, _React$Component);
+
+		function Product(props) {
+			_classCallCheck(this, Product);
+
+			return _possibleConstructorReturn(this, (Product.__proto__ || Object.getPrototypeOf(Product)).call(this, props));
+		}
+
+		_createClass(Product, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ className: "product" },
+					_react2.default.createElement(
+						"span",
+						{ className: "product_name" },
+						this.props.name
+					),
+					_react2.default.createElement("image", { className: "product_image", src: this.props.image, alt: "Loading" }),
+					_react2.default.createElement(
+						"span",
+						{ className: "product_price" },
+						this.props.price
+					)
+				);
+			}
+		}]);
+
+		return Product;
+	}(_react2.default.Component);
+
+	exports.default = Product;
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
 	exports.loadProducts = loadProducts;
 
 	var _actionTypes = __webpack_require__(258);
@@ -39731,7 +39802,7 @@
 	function loadProducts() {
 		return function (dispatch) {
 			setTimeout(function () {
-				var products = [];
+				var products = [{ name: "Jasmine Santa", price: "￥1999", image: "flowers/jasmine" }, { name: "Rose Santa", price: "￥999", image: "flowers/rose" }, { name: "Lavanda Santa", price: "￥1299", image: "flowers/lavanda" }, { name: "Jasmine Festive", price: "￥1999", image: "flowers/jasmine" }, { name: "Rose Festive", price: "￥999", image: "flowers/rose" }, { name: "Lavanda Festive", price: "￥1299", image: "flowers/lavanda" }];
 
 				dispatch(setProducts(products));
 			}, 2000);
@@ -39739,16 +39810,16 @@
 	}
 
 /***/ },
-/* 288 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(289);
+	var content = __webpack_require__(290);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(292)(content, {});
+	var update = __webpack_require__(294)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -39765,21 +39836,21 @@
 	}
 
 /***/ },
-/* 289 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(290)();
+	exports = module.exports = __webpack_require__(291)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: #2196f3;\n  font-family: fantasy; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 120px;\n  background-color: #4caf50;\n  width: 100%;\n  left: 0;\n  font-family: fantasy; }\n  .footer_link-group {\n    display: inline-block;\n    width: 200px;\n    vertical-align: top; }\n    .footer_link-group_title {\n      margin: 0 auto;\n      width: 100%;\n      display: block;\n      text-align: center;\n      color: lavender; }\n    .footer_link-group .link {\n      padding: 2px 0;\n      font-size: 12px;\n      text-align: center; }\n      .footer_link-group .link a {\n        color: floralwhite; }\n        .footer_link-group .link a:hover {\n          text-decoration: underline; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  height: 100%;\n  margin-top: -6px;\n  opacity: 0.5; }\n  .modal .loader {\n    background: url(" + __webpack_require__(291) + ");\n    width: 130px;\n    height: 130px;\n    margin-left: calc(50% - 65px);\n    margin-top: 300px; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: #2196f3;\n  font-family: fantasy; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px;\n      cursor: pointer; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 120px;\n  background-color: #4caf50;\n  width: 100%;\n  left: 0;\n  font-family: fantasy; }\n  .footer_link-group {\n    display: inline-block;\n    width: 200px;\n    vertical-align: top; }\n    .footer_link-group_title {\n      margin: 0 auto;\n      width: 100%;\n      display: block;\n      text-align: center;\n      color: lavender; }\n    .footer_link-group .link {\n      padding: 2px 0;\n      font-size: 12px;\n      text-align: center; }\n      .footer_link-group .link a {\n        color: floralwhite; }\n        .footer_link-group .link a:hover {\n          text-decoration: underline; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  height: 100%;\n  top: 40px;\n  left: 0;\n  bottom: 120px; }\n  .modal .loader {\n    background: url(" + __webpack_require__(292) + ");\n    width: 198px;\n    height: 198px;\n    margin-left: calc(50% - 96px);\n    margin-top: 230px; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n\n.product-list {\n  position: absolute;\n  top: 60px;\n  font-family: fantasy;\n  z-index: -1; }\n\n.product {\n  display: inline-block;\n  height: 300px;\n  width: 200px;\n  text-align: center; }\n  .product_name {\n    display: block; }\n  .product_image {\n    display: block;\n    width: 100%;\n    height: 80%;\n    background: url(" + __webpack_require__(293) + ") no-repeat center; }\n  .product_price {\n    display: block; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports) {
 
 	/*
@@ -39835,13 +39906,19 @@
 
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "8d7a0b59d31417d7e5a64c2cff5d0fef.svg";
 
 /***/ },
-/* 292 */
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "2cfe624417b69f1bf371e55191c0add7.gif";
+
+/***/ },
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

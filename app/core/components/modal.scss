@@ -4,15 +4,16 @@
 	width: 100%;
 	animation: pop-out 1s ease-in forwards;
 	height: 100%;
-	margin-top: -6px;
-	opacity: 0.5;
+	top: 40px;
+	left: 0;
+	bottom: 120px;
 
 	.loader {
 		background: url('../assets/gears.svg');
-		width: 130px;
-		height: 130px;
-		margin-left: calc(50% - 65px);
-		margin-top: 300px;
+		width: 198px;
+		height: 198px;
+		margin-left: calc(50% - 96px);
+		margin-top: 230px;
 	}
 }
 
