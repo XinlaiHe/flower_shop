@@ -66,11 +66,15 @@
 
 	var _appComponent2 = _interopRequireDefault(_appComponent);
 
-	var _homeComponent = __webpack_require__(276);
+	var _homePage = __webpack_require__(276);
 
-	var _homeComponent2 = _interopRequireDefault(_homeComponent);
+	var _homePage2 = _interopRequireDefault(_homePage);
 
-	var _core = __webpack_require__(289);
+	var _flowerDetailPage = __webpack_require__(289);
+
+	var _flowerDetailPage2 = _interopRequireDefault(_flowerDetailPage);
+
+	var _core = __webpack_require__(290);
 
 	var _core2 = _interopRequireDefault(_core);
 
@@ -85,7 +89,8 @@
 			_react2.default.createElement(
 				_reactRouter.Route,
 				{ component: _appComponent2.default },
-				_react2.default.createElement(_reactRouter.Route, { path: "/", component: _homeComponent2.default })
+				_react2.default.createElement(_reactRouter.Route, { path: "/", component: _homePage2.default }),
+				_react2.default.createElement(_reactRouter.Route, { path: "/flowers/:id", component: _flowerDetailPage2.default })
 			)
 		)
 	), document.getElementById("app"));
@@ -28872,6 +28877,8 @@
 
 	var userActions = _interopRequireWildcard(_user);
 
+	var _reactRouter = __webpack_require__(178);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -28901,7 +28908,7 @@
 					{ className: "navigation" },
 					_react2.default.createElement(
 						"h1",
-						{ className: "navigation_header" },
+						{ className: "navigation_header", onClick: this.goHome.bind(this) },
 						"Flower Shop"
 					),
 					_react2.default.createElement(_userBar2.default, this.props),
@@ -28936,6 +28943,11 @@
 						}
 					}()
 				);
+			}
+		}, {
+			key: "goHome",
+			value: function goHome() {
+				_reactRouter.hashHistory.push("/");
 			}
 		}]);
 
@@ -39735,6 +39747,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(178);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -39757,7 +39771,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					"div",
-					{ className: "product" },
+					{ className: "product", onClick: this.redirect.bind(this) },
 					_react2.default.createElement(
 						"span",
 						{ className: "product_name" },
@@ -39770,6 +39784,11 @@
 						this.props.price
 					)
 				);
+			}
+		}, {
+			key: "redirect",
+			value: function redirect() {
+				_reactRouter.hashHistory.push("/flowers/" + this.props.name);
 			}
 		}]);
 
@@ -39813,13 +39832,72 @@
 /* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _navigation = __webpack_require__(277);
+
+	var _navigation2 = _interopRequireDefault(_navigation);
+
+	var _footer = __webpack_require__(285);
+
+	var _footer2 = _interopRequireDefault(_footer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var FlowerComponent = function (_React$Component) {
+		_inherits(FlowerComponent, _React$Component);
+
+		function FlowerComponent(props) {
+			_classCallCheck(this, FlowerComponent);
+
+			return _possibleConstructorReturn(this, (FlowerComponent.__proto__ || Object.getPrototypeOf(FlowerComponent)).call(this, props));
+		}
+
+		_createClass(FlowerComponent, [{
+			key: "render",
+			value: function render() {
+				return _react2.default.createElement(
+					"div",
+					{ className: "content" },
+					_react2.default.createElement(_navigation2.default, null),
+					this.props.params.id,
+					_react2.default.createElement(_footer2.default, null)
+				);
+			}
+		}]);
+
+		return FlowerComponent;
+	}(_react2.default.Component);
+
+	exports.default = FlowerComponent;
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(290);
+	var content = __webpack_require__(291);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(294)(content, {});
+	var update = __webpack_require__(295)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -39836,21 +39914,21 @@
 	}
 
 /***/ },
-/* 290 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(291)();
+	exports = module.exports = __webpack_require__(292)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: #2196f3;\n  font-family: fantasy; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px;\n      cursor: pointer; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 120px;\n  background-color: #4caf50;\n  width: 100%;\n  left: 0;\n  font-family: fantasy; }\n  .footer_link-group {\n    display: inline-block;\n    width: 200px;\n    vertical-align: top; }\n    .footer_link-group_title {\n      margin: 0 auto;\n      width: 100%;\n      display: block;\n      text-align: center;\n      color: lavender; }\n    .footer_link-group .link {\n      padding: 2px 0;\n      font-size: 12px;\n      text-align: center; }\n      .footer_link-group .link a {\n        color: floralwhite; }\n        .footer_link-group .link a:hover {\n          text-decoration: underline; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  height: 100%;\n  top: 40px;\n  left: 0;\n  bottom: 120px; }\n  .modal .loader {\n    background: url(" + __webpack_require__(292) + ");\n    width: 198px;\n    height: 198px;\n    margin-left: calc(50% - 96px);\n    margin-top: 230px; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n\n.product-list {\n  position: absolute;\n  top: 60px;\n  font-family: fantasy;\n  z-index: -1; }\n\n.product {\n  display: inline-block;\n  height: 300px;\n  width: 200px;\n  text-align: center;\n  cursor: pointer;\n  border-radius: 6px;\n  transition: all 0.5s ease-in-out; }\n  .product:hover {\n    background-color: lightgrey; }\n  .product_name {\n    display: block; }\n  .product_image {\n    display: block;\n    width: 100%;\n    height: 80%;\n    background: url(" + __webpack_require__(293) + ") no-repeat center; }\n  .product_price {\n    display: block; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: #2196f3;\n  font-family: fantasy; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure;\n    cursor: pointer; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px;\n      cursor: pointer; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 120px;\n  background-color: #4caf50;\n  width: 100%;\n  left: 0;\n  font-family: fantasy; }\n  .footer_link-group {\n    display: inline-block;\n    width: 200px;\n    vertical-align: top; }\n    .footer_link-group_title {\n      margin: 0 auto;\n      width: 100%;\n      display: block;\n      text-align: center;\n      color: lavender; }\n    .footer_link-group .link {\n      padding: 2px 0;\n      font-size: 12px;\n      text-align: center; }\n      .footer_link-group .link a {\n        color: floralwhite; }\n        .footer_link-group .link a:hover {\n          text-decoration: underline; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  height: 100%;\n  top: 40px;\n  left: 0;\n  bottom: 120px; }\n  .modal .loader {\n    background: url(" + __webpack_require__(293) + ");\n    width: 198px;\n    height: 198px;\n    margin-left: calc(50% - 96px);\n    margin-top: 230px; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n\n.product-list {\n  position: absolute;\n  top: 60px;\n  font-family: fantasy;\n  z-index: -1; }\n\n.product {\n  display: inline-block;\n  height: 300px;\n  width: 200px;\n  text-align: center;\n  cursor: pointer;\n  border-radius: 6px;\n  transition: all 0.5s ease-in-out; }\n  .product:hover {\n    background-color: lightgrey; }\n  .product_name {\n    display: block; }\n  .product_image {\n    display: block;\n    width: 100%;\n    height: 80%;\n    background: url(" + __webpack_require__(294) + ") no-repeat center; }\n  .product_price {\n    display: block; }\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 291 */
+/* 292 */
 /***/ function(module, exports) {
 
 	/*
@@ -39906,19 +39984,19 @@
 
 
 /***/ },
-/* 292 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "8d7a0b59d31417d7e5a64c2cff5d0fef.svg";
 
 /***/ },
-/* 293 */
+/* 294 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "2cfe624417b69f1bf371e55191c0add7.gif";
 
 /***/ },
-/* 294 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*

@@ -9,6 +9,7 @@ import Link from "../components/link.jsx";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as userActions from "../../store/actions/user.action";
+import { hashHistory } from "react-router";
 
 class Navigation extends React.Component{
 
@@ -19,7 +20,7 @@ class Navigation extends React.Component{
 	render() {
 		return (
 			<div className="navigation">
-				<h1 className="navigation_header">Flower Shop</h1>
+				<h1 className="navigation_header" onClick={this.goHome.bind(this)}>Flower Shop</h1>
                 <UserBar {...this.props}/>
 				{(() => {
 					let content;
@@ -53,6 +54,10 @@ class Navigation extends React.Component{
 				})()}
 			</div>
 			)
+	}
+
+	goHome() {
+		hashHistory.push("/");
 	}
 }
 

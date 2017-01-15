@@ -1,6 +1,7 @@
 "use strict";
 
 import React from "react";
+import { hashHistory } from 'react-router';
 
 class Product extends React.Component{
 
@@ -10,12 +11,16 @@ class Product extends React.Component{
 
 	render() {
 		return (
-			<div className="product">
+			<div className="product" onClick={this.redirect.bind(this)}>
                 <span className="product_name">{this.props.name}</span>
 				<image className="product_image" src={this.props.image} alt="Loading"/>
 				<span className="product_price">{this.props.price}</span>
 			</div>
 			)
+	}
+
+	redirect() {
+		hashHistory.push("/flowers/" + this.props.name);
 	}
 }
 
