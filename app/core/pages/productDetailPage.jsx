@@ -3,6 +3,7 @@
 import React from "react";
 import Navigation from "../containers/navigation.jsx";
 import Footer from "../containers/footer.jsx";
+import ProductDetail from "../../product/containers/productDetail.jsx";
 
 class FlowerComponent extends React.Component{
 
@@ -14,7 +15,7 @@ class FlowerComponent extends React.Component{
 		return (
 			<div className="content">
                 <Navigation />
-                {this.props.params.id}
+                <ProductDetail id={this.props.params.id}/>
                 <Footer />
 			</div>
 			)

@@ -20,7 +20,7 @@ class Product extends React.Component{
 	}
 
 	redirect() {
-		hashHistory.push("/flowers/" + this.props.name);
+		hashHistory.push("/flowers/" + this.props.id);
 	}
 }
 

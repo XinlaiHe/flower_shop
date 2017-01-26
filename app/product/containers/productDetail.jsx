@@ -2,30 +2,31 @@
 
 import React from "react";
 import Modal from "../../core/components/modal.jsx";
-import Product from "../components/product.jsx";
+import Detail from "../components/detail.jsx";
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as productsActions from "../../store/actions/products.action";
+import * as detailActions from "../../store/actions/detail.action";
 
-class ProductList extends React.Component{
+class ProductDetail extends React.Component{
 
 	constructor(props) {
 		super(props);
-		this.props.loadProducts();
+		this.props.loadDetails(this.props.id);
 	}
 
 	render() {
+		console.log(this.props)
 		return (
-			<div className="product-list">
+			<div className="product-detail">
                 {(() => {
 					if (this.props.loading) {
 						const loader = <div className="loader"></div>;
 
 						return <Modal content={loader} />
 					} else {
-						const products = this.props.products.map((product) => <Product key={product.id} {...product} />);
+						const detail = <Detail {...this.props.detail}/>;
 
-						return products;
+						return detail;
 					}
 				})()}
 			</div>
@@ -34,11 +35,12 @@ class ProductList extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-	return state.productsInfo;
+	return state.productDetail;
 }
 
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators(productsActions, dispatch);
+	return bindActionCreators(detailActions, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
+
