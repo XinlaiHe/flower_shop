@@ -40009,7 +40009,6 @@
 			value: function render() {
 				var _this2 = this;
 
-				console.log(this.props);
 				return _react2.default.createElement(
 					"div",
 					{ className: "product-detail" },
@@ -40051,13 +40050,17 @@
 		value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRouter = __webpack_require__(178);
+	var _product = __webpack_require__(288);
+
+	var _product2 = _interopRequireDefault(_product);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40079,12 +40082,38 @@
 		_createClass(Detail, [{
 			key: "render",
 			value: function render() {
-				return _react2.default.createElement("div", { className: "detail" });
-			}
-		}, {
-			key: "redirect",
-			value: function redirect() {
-				_reactRouter.hashHistory.push("/flowers/" + this.props.id);
+				var products = this.props.recommendations.map(function (product) {
+					return _react2.default.createElement(_product2.default, _extends({ key: product.id }, product));
+				});
+
+				return _react2.default.createElement(
+					"div",
+					{ className: "detail" },
+					_react2.default.createElement(
+						"div",
+						{ className: "detail_image-container" },
+						_react2.default.createElement("img", { className: "detail_image", src: this.props.image })
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "detail_description-container" },
+						_react2.default.createElement(
+							"h2",
+							{ className: "detail_title" },
+							this.props.name
+						),
+						_react2.default.createElement(
+							"p",
+							{ className: "detail_description" },
+							this.props.description
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "detail_recommendation-container" },
+						products
+					)
+				);
 			}
 		}]);
 
@@ -40147,32 +40176,92 @@
 		name: "Jasmine Santa",
 		price: "￥1999",
 		image: "flowers/jasmine",
-		description: "This is a special gift for you friends, family and lover"
+		description: "This is a special gift for you friends, family and lover",
+		recommendations: [{ id: "asuwn3",
+			name: "Rose Santa",
+			image: "flowers/rose"
+		}, { id: "asuwn4",
+			name: "Lavanda Santa",
+			image: "flowers/lavanda"
+		}, { id: "asuwn5",
+			name: "Jasmine Festive",
+			image: "flowers/jasmine"
+		}]
 	}, { id: "asuwn3",
 		name: "Rose Santa",
 		price: "￥999",
 		image: "flowers/rose",
-		description: "This is a special gift for you friends, family and lover"
+		description: "This is a special gift for you friends, family and lover",
+		recommendations: [{ id: "asuwn3",
+			name: "Rose Santa",
+			image: "flowers/rose"
+		}, { id: "asuwn4",
+			name: "Lavanda Santa",
+			image: "flowers/lavanda"
+		}, { id: "asuwn5",
+			name: "Jasmine Festive",
+			image: "flowers/jasmine"
+		}]
 	}, { id: "asuwn4",
 		name: "Lavanda Santa",
 		price: "￥799",
 		image: "flowers/lavanda",
-		description: "This is a special gift for you friends, family and lover"
+		description: "This is a special gift for you friends, family and lover",
+		recommendations: [{ id: "asuwn3",
+			name: "Rose Santa",
+			image: "flowers/rose"
+		}, { id: "asuwn4",
+			name: "Lavanda Santa",
+			image: "flowers/lavanda"
+		}, { id: "asuwn5",
+			name: "Jasmine Festive",
+			image: "flowers/jasmine"
+		}]
 	}, { id: "asuwn5",
 		name: "Jasmine Festive",
 		price: "￥599",
 		image: "flowers/jasmine",
-		description: "This is a special gift for you friends, family and lover"
-	}, { id: "asuwn5",
+		description: "This is a special gift for you friends, family and lover",
+		recommendations: [{ id: "asuwn3",
+			name: "Rose Santa",
+			image: "flowers/rose"
+		}, { id: "asuwn4",
+			name: "Lavanda Santa",
+			image: "flowers/lavanda"
+		}, { id: "asuwn5",
+			name: "Jasmine Festive",
+			image: "flowers/jasmine"
+		}]
+	}, { id: "asuwn6",
 		name: "Rose Festive",
 		price: "￥699",
 		image: "flowers/rose",
-		description: "This is a special gift for you friends, family and lover"
-	}, { id: "asuwn4",
+		description: "This is a special gift for you friends, family and lover",
+		recommendations: [{ id: "asuwn3",
+			name: "Rose Santa",
+			image: "flowers/rose"
+		}, { id: "asuwn4",
+			name: "Lavanda Santa",
+			image: "flowers/lavanda"
+		}, { id: "asuwn5",
+			name: "Jasmine Festive",
+			image: "flowers/jasmine"
+		}]
+	}, { id: "asuwn7",
 		name: "Lavanda Santa",
 		price: "￥899",
 		image: "flowers/lavanda",
-		description: "This is a special gift for you friends, family and lover"
+		description: "This is a special gift for you friends, family and lover",
+		recommendations: [{ id: "asuwn3",
+			name: "Rose Santa",
+			image: "flowers/rose"
+		}, { id: "asuwn4",
+			name: "Lavanda Santa",
+			image: "flowers/lavanda"
+		}, { id: "asuwn5",
+			name: "Jasmine Festive",
+			image: "flowers/jasmine"
+		}]
 	}];
 
 	exports.default = function (id) {
@@ -40216,7 +40305,7 @@
 
 
 	// module
-	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: #2196f3;\n  font-family: fantasy; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure;\n    cursor: pointer; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px;\n      cursor: pointer; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 120px;\n  background-color: #4caf50;\n  width: 100%;\n  left: 0;\n  font-family: fantasy; }\n  .footer_link-group {\n    display: inline-block;\n    width: 200px;\n    vertical-align: top; }\n    .footer_link-group_title {\n      margin: 0 auto;\n      width: 100%;\n      display: block;\n      text-align: center;\n      color: lavender; }\n    .footer_link-group .link {\n      padding: 2px 0;\n      font-size: 12px;\n      text-align: center; }\n      .footer_link-group .link a {\n        color: floralwhite; }\n        .footer_link-group .link a:hover {\n          text-decoration: underline; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  top: 40px;\n  left: 0;\n  bottom: 120px; }\n  .modal .loader {\n    background: url(" + __webpack_require__(299) + ");\n    width: 198px;\n    height: 198px;\n    margin-left: calc(50% - 96px);\n    margin-top: 230px; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n\n.product-list {\n  position: absolute;\n  top: 60px;\n  font-family: fantasy;\n  z-index: -1; }\n\n.product {\n  display: inline-block;\n  height: 300px;\n  width: 200px;\n  text-align: center;\n  cursor: pointer;\n  border-radius: 6px;\n  transition: all 0.5s ease-in-out; }\n  .product:hover {\n    background-color: lightgrey; }\n  .product_name {\n    display: block; }\n  .product_image {\n    display: block;\n    width: 100%;\n    height: 80%;\n    background: url(" + __webpack_require__(300) + ") no-repeat center; }\n  .product_price {\n    display: block; }\n", ""]);
+	exports.push([module.id, ".navigation {\n  position: fixed;\n  top: 0;\n  left: 0;\n  display: block;\n  width: 100%;\n  height: 40px;\n  background-color: #2196f3;\n  font-family: fantasy; }\n  .navigation_header {\n    display: inline-block;\n    font-size: 16px;\n    margin-left: 16px;\n    color: azure;\n    cursor: pointer; }\n  .navigation_user-bar {\n    position: absolute;\n    right: 10px;\n    height: 40px;\n    display: inline-block; }\n    .navigation_user-bar_logout, .navigation_user-bar_login {\n      height: 50%;\n      margin-top: 12px;\n      display: block;\n      color: azure;\n      font-size: 16px;\n      cursor: pointer; }\n\n.footer {\n  position: fixed;\n  bottom: 0;\n  height: 120px;\n  background-color: #4caf50;\n  width: 100%;\n  left: 0;\n  font-family: fantasy; }\n  .footer_link-group {\n    display: inline-block;\n    width: 200px;\n    vertical-align: top; }\n    .footer_link-group_title {\n      margin: 0 auto;\n      width: 100%;\n      display: block;\n      text-align: center;\n      color: lavender; }\n    .footer_link-group .link {\n      padding: 2px 0;\n      font-size: 12px;\n      text-align: center; }\n      .footer_link-group .link a {\n        color: floralwhite; }\n        .footer_link-group .link a:hover {\n          text-decoration: underline; }\n\n.modal {\n  position: fixed;\n  z-index: 999;\n  width: 100%;\n  animation: pop-out 1s ease-in forwards;\n  top: 40px;\n  left: 0;\n  bottom: 120px; }\n  .modal .loader {\n    background: url(" + __webpack_require__(299) + ");\n    width: 198px;\n    height: 198px;\n    margin-left: calc(50% - 96px);\n    margin-top: 230px; }\n\n@keyframes pop-out {\n  from {\n    background-color: white; }\n  to {\n    background-color: #eae4db; } }\n\n.form {\n  margin: 0 auto;\n  width: 360px;\n  background-color: white;\n  border-radius: 8px;\n  margin-top: 100px; }\n\n.input-field {\n  padding: 30px 0; }\n  .input-field_label {\n    margin: 0 10px; }\n  .input-field_text {\n    float: right;\n    margin-right: 10px; }\n\n.link {\n  padding: 30px 0;\n  cursor: pointer;\n  margin: 0 10px; }\n  .link a {\n    color: grey;\n    text-decoration: none; }\n\n.control {\n  display: inline-block;\n  width: 49%;\n  height: 40px;\n  border: 1px solid black;\n  cursor: pointer; }\n  .control .Login,\n  .control .Register {\n    background-color: white;\n    color: black;\n    width: 100%; }\n  .control .Cancel {\n    background-color: black;\n    color: white;\n    width: 100%; }\n\n.product-list {\n  position: absolute;\n  top: 60px;\n  font-family: fantasy;\n  z-index: -1; }\n\n.product {\n  display: inline-block;\n  height: 300px;\n  width: 200px;\n  text-align: center;\n  cursor: pointer;\n  border-radius: 6px;\n  transition: all 0.5s ease-in-out; }\n  .product:hover {\n    background-color: lightgrey; }\n  .product_name {\n    display: block; }\n  .product_image {\n    display: block;\n    width: 100%;\n    height: 80%;\n    background: url(" + __webpack_require__(300) + ") no-repeat center; }\n  .product_price {\n    display: block; }\n\n.product-detail {\n  position: relative;\n  top: 40px; }\n\n.detail {\n  font-family: fantasy; }\n  .detail_image-container {\n    display: inline-block; }\n  .detail_image {\n    background: url(" + __webpack_require__(300) + ") no-repeat center;\n    height: 300px;\n    width: 300px; }\n  .detail_description-container {\n    display: inline-block;\n    vertical-align: top;\n    margin-left: 30px; }\n  .detail_recommendation-container {\n    margin-top: 25px; }\n  .detail_title {\n    line-height: 1;\n    margin: 0; }\n", ""]);
 
 	// exports
 

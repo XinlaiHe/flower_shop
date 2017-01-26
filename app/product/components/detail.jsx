@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import { hashHistory } from 'react-router';
+import Product from "./product.jsx";
 
 class Detail extends React.Component{
 
@@ -10,15 +10,22 @@ class Detail extends React.Component{
 	}
 
 	render() {
+		const products = this.props.recommendations.map((product) => <Product key={product.id} {...product}/>);
+
 		return (
 			<div className="detail">
-                
+				<div className="detail_image-container">
+                	<img className="detail_image" src={this.props.image}/>
+                </div>
+                <div className="detail_description-container">
+                	<h2 className="detail_title">{this.props.name}</h2>
+                	<p className="detail_description">{this.props.description}</p>
+                </div>
+                <div className="detail_recommendation-container">
+                	{products}
+                </div>
 			</div>
 			)
-	}
-
-	redirect() {
-		hashHistory.push("/flowers/" + this.props.id);
 	}
 }
 

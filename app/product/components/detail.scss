@@ -1,0 +1,28 @@
+.detail {
+	font-family: fantasy;
+
+	&_image-container {
+		display: inline-block;
+	}
+
+	&_image {
+		background: url("../assets/ring-alt.gif") no-repeat center;
+		height: 300px;
+		width: 300px;
+	}
+
+	&_description-container {
+		display: inline-block;
+		vertical-align: top;
+    	margin-left: 30px;
+	}
+
+	&_recommendation-container {
+		margin-top: 25px;
+	}
+
+	&_title {
+		line-height: 1;
+		margin: 0;
+	}
+}
