@@ -2,6 +2,7 @@
 
 import React from "react";
 import Product from "./product.jsx";
+import Control from "../../core/components/control.jsx";
 
 class Detail extends React.Component{
 
@@ -20,6 +21,8 @@ class Detail extends React.Component{
                 <div className="detail_description-container">
                 	<h2 className="detail_title">{this.props.name}</h2>
                 	<p className="detail_description">{this.props.description}</p>
+                	<Control text="Add To Cart"/>
+                	<Control text="Continue Shopping"/>
                 </div>
                 <div className="detail_recommendation-container">
                 	{products}

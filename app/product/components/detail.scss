@@ -15,6 +15,22 @@
 		display: inline-block;
 		vertical-align: top;
     	margin-left: 30px;
+
+    	.control {
+    		width: 100%;
+    		margin-top: 20px;
+    		background-color: white;
+    		transition: all 1s ease;
+
+    		button {
+    			margin: 0;
+    		}
+
+    		&:hover {
+    			background-color: black;
+    			color: white;
+    		}
+    	}
 	}
 
 	&_recommendation-container {
